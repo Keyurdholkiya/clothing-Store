@@ -1,0 +1,261 @@
+        :root {
+            --primary: #ff6b6b;
+            --primary-light: #ff8e8e;
+            --secondary: #5f27cd;
+            --dark: #222f3e;
+            --light: #f5f6fa;
+            --white: #ffffff;
+            --gray: #8395a7;
+            --light-gray: #e2e8f0;
+            --danger: #ff4757;
+            --success: #1dd1a1;
+            --card-bg: #ffffff;
+            --body-bg: #f9f9f9;
+            --text-color: #222f3e;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            padding: 2rem;
+
+        }
+
+        body.dark {
+            background-color: #1e272e;
+            color: #f1f2f6;
+        }
+
+        body.dark .header {
+            background: #2f3640;
+            box-shadow: none;
+        }
+
+        body.dark .nav-links a,
+        body.dark .cart-icon,
+        body.dark .logo {
+            color: #f1f2f6;
+        }
+
+        body.dark .product-card {
+            background: #2f3640;
+            color: #f1f2f6;
+        }
+
+        body.dark .product-title,
+        body.dark .product-price {
+            color: #f1f2f6;
+        }
+
+        body.dark .product-description,
+        body.dark .product-category {
+            color: #dcdde1;
+        }
+
+        body.dark .add-to-cart {
+            background: linear-gradient(135deg, #00d2d3, #5f27cd);
+        }
+
+        body.dark .add-to-cart:hover {
+            background: linear-gradient(135deg, #1dd1a1, #341f97);
+        }
+
+
+        .address-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .address-list {
+            margin-bottom: 3rem;
+        }
+
+        .address-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .address-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .default-badge {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .address-item p {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .address-item p:first-of-type {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff3f3f;
+        }
+
+        #address-form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(95, 39, 205, 0.3);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .checkbox-group input {
+            margin-right: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }

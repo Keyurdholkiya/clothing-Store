@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        padding: 2rem;
+        background-color: #f5f5f5;
+        color: black;
+    }
+
+    body.dark {
+        background-color: #1e272e;
+        color: #f1f2f6;
+    }
+
+    body.dark .header {
+        background: #2f3640;
+        box-shadow: none;
+    }
+
+    body.dark .nav-links a,
+    body.dark .cart-icon,
+    body.dark .logo {
+        color: #f1f2f6;
+    }
+
+    body.dark .product-card {
+        background: #2f3640;
+        color: #f1f2f6;
+    }
+
+    body.dark .product-title,
+    body.dark .product-price {
+        color: #f1f2f6;
+    }
+
+    body.dark .product-description,
+    body.dark .product-category {
+        color: #dcdde1;
+    }
+
+    body.dark .add-to-cart {
+        background: linear-gradient(135deg, #00d2d3, #5f27cd);
+    }
+
+    body.dark .add-to-cart:hover {
+        background: linear-gradient(135deg, #1dd1a1, #341f97);
+    }
+
+    h2 {
+        color: #ff6b6b;
+        margin-bottom: 1rem;
+    }
+
+    .cart-item,
+    .summary-box {
+        background: white;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .cart-item img {
+        width: 80px;
+        border-radius: 6px;
+    }
+
+    .item-details {
+        flex: 1;
+        color: black;
+        margin-left: 1rem;
+    }
+
+    .remove-btn {
+        background-color: #ff4757;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .remove-btn:hover {
+        background-color: #e84118;
+    }
+
+    .summary-box {
+        padding: 1.5rem;
+    }
+
+    .summary-box h3 {
+        margin-bottom: 1rem;
+        color: #2f3542;
+    }
+
+    .summary-box h4 {
+        color: black;
+    }
+
+    .place-order {
+        background-color: #1dd1a1;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .place-order:hover {
+        background-color: #10ac84;
+    }
+
+    p {
+        color: black;
+    }
+</style>
+
+<body>
+    <h2>Your Cart</h2>
+
+    {% if items %}
+    {% for item in items %}
+    {% set name = item.id %}
+    <div class="cart-item">
+        <img src="{{ item.image }}" alt="{{ item.title }}">
+        <div class="item-details">
+            <p><strong>{{ item.title }}</strong></p>
+            <p>${{ item.price }}</p>
+        </div>
+        <form action="{{ url_for('remove_from_cart', product_id=item.id) }}" method="get">
+            <button class="remove-btn">Remove</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    <div class="summary-box">
+        <h3>Order Summary</h3>
+        <p><strong>Total:</strong> ${{ total }}</p>
+
+        {% if address %}
+        <h4>Delivery Address:</h4> 
+        <p><i class='fas fa-home' style="color: black;margin-right: 5px; "></i>{{ address.name }}</p>
+        <p>{{ address.street }}, {{ address.city }}, {{ address.code }}</p>
+        <p>{{ address.Province }}, {{ address.country }}</p>
+        <p>Phone: {{ address.phone }}</p>
+        <!-- Single "Place Order" button for all items -->
+        <form method="post" action="{{ url_for('place_order') }}">
+            <!-- Hidden input to send all product IDs (comma-separated) -->
+            <input type="hidden" name="product_ids" value="{{ items|map(attribute='id')|join(',') }}">
+            <button type="submit" class="place-order">Place Order</button>
+        </form>
+        {% else %}
+        <p style="color: red;">No address found. Please <a href="/address">add one</a>.</p>
+        {% endif %}
+
+        <br>
+
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</body>
+<script>
+    // Apply dark theme if saved in localStorage
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+    }
+</script>
+
+</html>

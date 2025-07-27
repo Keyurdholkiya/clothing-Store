@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Fashion Boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="account.css">
+</head>
+<style>
+          :root {
+          --primary: #ff6b6b;
+          --primary-light: #ff8e8e;
+          --secondary: #5f27cd;
+          --dark: #222f3e;
+          --light: #f5f6fa;
+          --white: #ffffff;
+          --gray: #8395a7;
+          --light-gray: #e2e8f0;
+          --danger: #ff4757;
+          --success: #1dd1a1;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+          background-color: #f9f9f9;
+          color: var(--dark);
+      }
+
+      .account-container {
+          max-width: 1000px;
+          margin: 3rem auto;
+          padding: 0 1.5rem;
+      }
+
+      .account-card {
+          background: var(--white);
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+          overflow: hidden;
+      }
+
+      .account-header {
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          padding: 2rem;
+          text-align: center;
+      }
+
+      .account-header h2 {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+      }
+
+      .account-header p {
+          opacity: 0.9;
+      }
+
+      .account-body {
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: 2rem;
+      }
+
+      .account-sidebar {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .user-profile {
+          text-align: center;
+          margin-bottom: 2rem;
+      }
+
+      .avatar {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 5px solid var(--light);
+          margin: -70px auto 1rem;
+          background: var(--light-gray);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 3rem;
+          color: var(--gray);
+      }
+
+      .account-details {
+          background: var(--light);
+          padding: 1.5rem;
+          border-radius: 12px;
+          margin-bottom: 1.5rem;
+      }
+
+      .account-details h3 {
+          color: var(--primary);
+          margin-bottom: 1rem;
+          font-size: 1.2rem;
+          border-bottom: 2px solid var(--light-gray);
+          padding-bottom: 0.5rem;
+      }
+
+      .detail-item {
+          margin-bottom: 1rem;
+      }
+
+      .detail-item strong {
+          display: block;
+          color: var(--gray);
+          font-size: 0.9rem;
+          margin-bottom: 0.25rem;
+      }
+
+      .detail-item p {
+          font-weight: 500;
+      }
+
+      .logout-btn {
+          display: inline-block;
+          width: 100%;
+          padding: 0.75rem;
+          background: var(--danger);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          text-align: center;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          margin-top: auto;
+      }
+
+      .logout-btn:hover {
+          background: #ff3f3f;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+      }
+
+      .account-content {
+          background: var(--light);
+          padding: 1.5rem;
+          border-radius: 12px;
+      }
+
+      .empty-state {
+          text-align: center;
+          padding: 2rem;
+          color: var(--gray);
+      }
+
+      .empty-state i {
+          font-size: 3rem;
+          color: var(--light-gray);
+          margin-bottom: 1rem;
+      }
+
+      .order-history {
+          margin-top: 2rem;
+      }
+
+      .nav-tabs {
+          display: flex;
+          border-bottom: 2px solid var(--light-gray);
+          margin-bottom: 1.5rem;
+      }
+
+      .nav-tab {
+          padding: 0.75rem 1.5rem;
+          cursor: pointer;
+          font-weight: 500;
+          color: var(--gray);
+          border-bottom: 3px solid transparent;
+          transition: all 0.3s ease;
+      }
+
+      .nav-tab.active {
+          color: var(--primary);
+          border-bottom-color: var(--primary);
+      }
+
+      .nav-tab a {
+          color: inherit;
+          text-decoration: none;
+      }
+
+      .tab-content {
+          display: none;
+      }
+
+      .tab-content.active {
+          display: block;
+      }
+
+      /* Order History Section */
+      .section-title {
+          font-size: 1.5rem;
+          margin-bottom: 1.5rem;
+          color: #333;
+      }
+
+      .order-history-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 2rem;
+      }
+
+      .order-card {
+          display: flex;
+          background: #8395a7;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          padding: 1rem;
+          transition: transform 0.2s;
+      }
+
+      .order-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .order-image {
+          width: 80px;
+          height: 80px;
+          margin-right: 1rem;
+          flex-shrink: 0;
+      }
+
+      .order-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 4px;
+      }
+
+      .order-details {
+          flex-grow: 1;
+      }
+
+      .order-details h4 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1rem;
+          color: #333;
+      }
+
+      .price {
+          font-weight: bold;
+          color: var(--primary);
+          margin: 0;
+      }
+
+      .order-actions {
+          display: flex;
+          align-items: center;
+          margin-left: 1rem;
+      }
+
+      .reorder-btn {
+          padding: 0.5rem 1.25rem;
+          background: var(--primary);
+          color: white;
+          border-radius: 50px;
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: background 0.2s;
+      }
+
+      .reorder-btn:hover {
+          background: #0069d9;
+      }
+
+      .clear-all-btn {
+          padding: 0.5rem 1.5rem;
+          background: var(--light-gray);
+          color: var(--dark);
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+
+      .clear-all-btn:hover {
+          background: var(--gray);
+          color: white;
+      }
+
+      .empty-history {
+          grid-column: 1 / -1;
+          text-align: center;
+          padding: 2rem;
+          color: #666;
+      }
+
+      /* Address Section */
+      .address-container {
+          display: grid;
+          gap: 1.5rem;
+      }
+
+      .address-card {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .address-card h4 {
+          margin-bottom: 0.5rem;
+          color: var(--dark);
+      }
+
+      .address-card p {
+          margin-bottom: 0.5rem;
+          color: var(--gray);
+      }
+
+      .address-actions {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+      }
+
+      .address-btn {
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+
+      .edit-btn {
+          background: var(--light-gray);
+          color: var(--dark);
+          border: none;
+      }
+
+      /* Avatar Upload Styles */
+      .avatar-preview {
+          text-align: center;
+          margin-bottom: 1.5rem;
+      }
+
+      .current-avatar {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 5px solid var(--light);
+      }
+
+      .avatar-form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .upload-btn {
+          display: inline-block;
+          padding: 0.75rem 1.5rem;
+          background: var(--primary);
+          color: white;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s;
+      }
+
+      .upload-btn:hover {
+          background: var(--primary-light);
+      }
+
+      #file-name {
+          display: block;
+          margin-top: 0.5rem;
+          color: var(--gray);
+          font-size: 0.9rem;
+      }
+
+      .save-btn {
+          margin-top: 1rem;
+          padding: 0.75rem 2rem;
+          background: var(--success);
+          color: white;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s;
+      }
+
+      .save-btn:hover {
+          background: #0da271;
+      }
+
+      .settings-section {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .setting-option {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+      }
+
+      body.dark .settings-section {
+          background: #2f3640;
+      }
+
+      .remove-btn {
+          background: var(--danger);
+          color: white;
+          border: none;
+      }
+
+      .add-address-btn {
+          display: inline-block;
+          padding: 0.75rem 1.5rem;
+          background: var(--primary);
+          color: white;
+          border-radius: 50px;
+          text-decoration: none;
+          margin-top: 1rem;
+      }
+
+      .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 24px;
+          vertical-align: middle;
+      }
+
+      .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+      }
+
+      .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+          border-radius: 24px;
+      }
+
+      .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 3px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+      }
+
+      input:checked+.slider {
+          background-color: #1dd1a1;
+      }
+
+      input:checked+.slider:before {
+          transform: translateX(26px);
+      }
+      a button{
+        margin-left: 170px;
+      }
+
+      /* DARK MODE */
+      body.dark {
+          background-color: #1e272e;
+          color: #f1f2f6;
+      }
+
+      body.dark .account-card,
+      body.dark .account-details,
+      body.dark .account-content {
+          background-color: #2f3640;
+          color: #f5f6fa;
+      }
+
+      @media (max-width: 768px) {
+          .order-history-container {
+              grid-template-columns: 1fr;
+          }
+
+          .order-card {
+              flex-direction: column;
+          }
+
+          .order-image {
+              margin-right: 0;
+              margin-bottom: 1rem;
+              width: 100%;
+              height: 120px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .account-body {
+              grid-template-columns: 1fr;
+          }
+
+          .account-sidebar {
+              order: 2;
+              margin-top: 2rem;
+          }
+
+          .avatar {
+              margin: 0 auto 1rem;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .account-container {
+              padding: 0 1rem;
+          }
+
+          .account-header h2 {
+              font-size: 1.5rem;
+          }
+
+          .nav-tabs {
+              overflow-x: auto;
+              white-space: nowrap;
+          }
+      }
+</style>
+<body>
+    <div class="account-container">
+        <div class="account-card">
+            <div class="account-header">
+                <h2>My Account</h2>
+                <p>Manage your profile and orders</p>
+            </div>
+
+            <div class="account-body">
+                <div class="account-sidebar">
+                    <div class="user-profile">
+                        {% if user.avatar %}
+                        <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="Profile Picture"
+                            class="avatar" id="profile-avatar">
+                        {% else %}
+                        <div class="avatar" id="default-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        {% endif %}
+                        <h3>{{ session['username'] }}</h3>
+                        <p>{{ user.email }}</p>
+                    </div>
+
+                    <div class="account-details">
+                        <h3>Account Details</h3>
+                        <div class="detail-item">
+                            <strong>Username</strong>
+                            <p>{{ session['username'] }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Email</strong>
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Password</strong>
+                            {% if session['username'] %}
+                                <p>********</p>
+                            {% else %}
+                                <p></p>
+                             {% endif %}
+
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('logout') }}" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+
+                <div class="account-content">
+                    <div class="nav-tabs">
+                        <div class="nav-tab active" data-tab="orders">Orders</div>
+                        <div class="nav-tab" data-tab="addresses">Addresses</div>
+                        <div class="nav-tab" data-tab="settings">Settings</div>
+                    </div>
+
+                    <!-- Orders Tab Content -->
+                    <div id="orders-tab" class="tab-content active">
+                        <h3 class="section-title">Order History</h3>
+                        <div class="order-history-container">
+                            {% if datas %}
+                            {% for item in datas %}
+                            <div class="order-card">
+                                <div class="order-image">
+                                    <img src="{{item.image}}" alt="{{item.title}}">
+                                </div>
+                                <div class="order-details">
+                                    <h4>{{ item.title }}</h4>
+                                    <p class="price">${{ item.price }}</p>
+                                </div>
+                                <div class="order-actions">
+                                    <a href="{{ url_for('index') }}" class="reorder-btn">Reorder</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="empty-history">
+                                <p>No orders found</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('order_history') }}"><button class="clear-all-btn">
+                            <i class="fa fa-remove" style="margin-right: 5px;"></i>Clear All</button></a>
+                    </div>
+
+                    <!-- Addresses Tab Content -->
+                    <div id="addresses-tab" class="tab-content">
+                        <h3 class="section-title">Saved Addresses</h3>
+                        <div class="address-container">
+                            {% if addresses %}
+                            {% for address in addresses %}
+                            <div class="address-card">
+                                <h4>{{ address.name }}</h4>
+                                <p>{{ address.street }}, {{ address.city }}, {{ address.code }}</p>
+                                <p>{{ address.province }}, {{ address.country }}</p>
+                                <p>Phone: {{ address.phone }}</p>
+                                <div class="address-actions">
+                                    <button class="address-btn edit-btn">
+                                        <i class="far fa-edit" style="margin-right: 5px;"></i>Edit</button>
+                                    <button class="address-btn edit-btn" onclick="confirmRemove('{{ address.name }}')">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="empty-history">
+                                <p>No addresses saved</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('address') }}" class="add-address-btn">
+                            <i class="fas fa-plus"></i> Add New Address
+                        </a>
+                        <a href="{{ url_for('index' ) }}"><button class="add-address-btn">
+                            <i class='fas fa-home' style="margin-right: 5px;"></i>home</button></a>
+                    </div>
+
+                    <!-- Settings Tab Content -->
+                    <!-- Settings Tab Content -->
+                    <div id="settings-tab" class="tab-content">
+                        <h3 class="section-title">Account Settings</h3>
+
+                        <div class="settings-section">
+                            <h4>Profile Picture</h4>
+                            <div class="avatar-preview">
+                                {% if user.avatar %}
+                                <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}"
+                                    alt="Profile Picture" class="current-avatar">
+                                {% else %}
+                                <div class="avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <form action="{{ url_for('upload_avatar') }}" method="POST" enctype="multipart/form-data"
+                                class="avatar-form">
+                                <div class="form-group">
+                                    <label for="avatar-upload" class="upload-btn">
+                                        <i class="fas fa-camera"></i> Choose Image
+                                        <input type="file" id="avatar-upload" name="avatar" accept="image/*"
+                                            style="display: none;">
+                                    </label>
+                                    <span id="file-name">No file chosen</span>
+                                </div>
+                                <button type="submit" class="save-btn">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-section">
+                            <h4>Theme Preferences</h4>
+                            <div class="setting-option">
+                                <label class="switch">
+                                    <input type="checkbox" id="theme-toggle">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Dark Mode</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // File upload feedback
+        document.getElementById('avatar-upload').addEventListener('change', function (e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+
+            // Preview image
+            if (e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const preview = document.querySelector('.avatar-preview');
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Preview" class="current-avatar">`;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        // Theme toggle logic
+        const themeToggle = document.getElementById("theme-toggle");
+        const currentTheme = localStorage.getItem("theme");
+
+        if (currentTheme === "dark") {
+            document.body.classList.add("dark");
+            if (themeToggle) themeToggle.checked = true;
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener("change", () => {
+                if (themeToggle.checked) {
+                    document.body.classList.add("dark");
+                    localStorage.setItem("theme", "dark");
+                } else {
+                    document.body.classList.remove("dark");
+                    localStorage.setItem("theme", "light");
+                }
+            });
+        }
+
+        // Tab switching functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show the corresponding tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Make address tab clickable without navigating away
+        document.querySelectorAll('.nav-tab[data-tab="addresses"]').forEach(tab => {
+            tab.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+        function confirmRemove(addressKey) {
+            if (confirm('Are you sure you want to remove this address?')) {
+                window.location.href = "/remove/" + addressKey;
+            }
+        }
+    </script>
+</body>
+
+</html>
